@@ -1,70 +1,60 @@
-# Real-Time Wikipedia Streaming Pipeline with Kafka & OpenSearch
-This project demonstrates a complete real-time data pipeline using Spring Boot, Apache Kafka, and OpenSearch.  
-It streams live Wikipedia edits from Wikimedia EventStreams, publishes them into Kafka, and then consumes and indexes the data into OpenSearch for fast searching and analysis.
+# Real-Time Streaming Pipeline + Live Dashboard
 
-### Features
-- Streams live Wikipedia RecentChange events (SSE stream)
-- Kafka producer sends raw JSON data to a topic
-- Kafka consumer reads messages and bulk-indexes them into OpenSearch
-- Automatic startup & shutdown of Kafka/OpenSearch via Docker
-- Uses Spring Boot for orchestration
-- Handles JSON errors, bulk operations, and controlled shutdowns
+## Goal
+Build a real-time event streaming pipeline (Kafka-inspired) and a **live dashboard** that visualizes the system’s behavior in real time: throughput, queue pressure, latency, and errors.
 
-### Architecture Overview
-```
-Wikimedia EventStream
-        |
-        v
-Kafka Producer  --->  Kafka Topic (wikimedia_recentchange)
-        |
-        v
-Kafka Consumer  --->  OpenSearch Index (wikimedia)
-```
-This pipeline converts live Wikipedia edits into a searchable dataset.
+This project is designed to be:
+- **Demo-friendly** (visual proof the system is working)
+- **Extensible** (can be reused as a module in larger systems)
 
-### Technologies Used
-- Java 17+ / Spring Boot
-- Apache Kafka
-- OpenSearch (Elasticsearch compatible)
-- Docker & Docker Compose
-- JSON Processing
+---
 
-### How It Works
-1. Application Startup
-When Spring Boot launches:
-- Docker start commands are executed (docker-start.txt)
-- Kafka and OpenSearch containers are started automatically
+## MVP (What “Done” Means)
+The MVP is complete when the dashboard shows live updates for:
 
-2. Producer Stage
-The WikimediaProducer:
-- Connects to
-```
-https://stream.wikimedia.org/v2/stream/recentchange
-```
-- Receives live JSON events
-- Publishes each event to the Kafka topic:
-```
-wikimedia_recentchange
-```
-3. Consumer Stage
-The OpenSearchConsumer:
-- Subscribes to the Kafka topic
-- Reads messages in batches
-- Creates the OpenSearch index if needed
-- Inserts documents using the Bulk API
+- **Events/sec** (throughput)
+- **Total events processed**
+- **Average processing latency (ms)**
+- **Queue size / backlog**
+- **Error count + success vs error**
 
-4. Shutdown
-After processing:
-- Docker stop commands are executed (docker-end.txt)
-- Kafka & OpenSearch gracefully shut down
+And the system includes:
+- A **load generator** to produce events (configurable rate)
+- A **metrics endpoint** (polling-based first, WebSocket optional later)
+- A dashboard UI that refreshes metrics every ~1 second
 
-### Running the Project
-**Prerequisites**
-- Docker installed
-- Java 17+
-- Maven
+---
 
-**Command**
-```
-mvn spring-boot:run
-```
+## In Scope (Phase 1)
+### Backend
+- Metrics collection (thread-safe counters + latency tracking)
+- Sliding window calculations (e.g., last 10s / last 60s)
+- REST API: `GET /api/metrics`
+- Load generator (simulate traffic + optional error injection)
+
+### Frontend (Dashboard)
+- Simple dashboard with:
+  - Metric cards
+  - Throughput time-series chart (last 60s)
+  - Success vs error chart
+
+---
+
+## Out of Scope (Phase 1)
+To keep this project focused and finishable, the MVP will NOT include:
+- Authentication / authorization
+- Persistent storage for metrics (DB)
+- Distributed cluster mode / multi-node replication
+- Exactly-once semantics
+- Full UI responsiveness / mobile-first design
+- Complex alerting pipelines (email/slack)
+
+---
+
+## Success Criteria
+- When load increases, the dashboard clearly shows:
+  - Events/sec rising
+  - Queue size changing (if consumer can’t keep up)
+  - Latency reacting under pressure
+  - Errors increasing when error injection is enabled
+- A reviewer can run the project locally and see results within 2–3 minutes.
