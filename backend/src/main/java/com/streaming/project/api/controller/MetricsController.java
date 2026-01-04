@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.streaming.project.metrics.dto.MetricsSnapshot;
-import com.streaming.project.metrics.service.MetricsService;
+import com.streaming.project.metrics.service.MetricsCollectorService;
 
 @RestController
 @RequestMapping("api")
 public class MetricsController {
 	
 	@Autowired
-	private MetricsService service;
+	private MetricsCollectorService service;
 	
 	@GetMapping("/metrics")
 	public MetricsSnapshot getMetrics() {
