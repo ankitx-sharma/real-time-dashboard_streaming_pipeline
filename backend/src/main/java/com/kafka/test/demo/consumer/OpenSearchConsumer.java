@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class OpenSearchConsumer {
 	Logger logger = LoggerFactory.getLogger(OpenSearchConsumer.class.getSimpleName());
 	

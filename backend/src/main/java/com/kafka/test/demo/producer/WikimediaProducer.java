@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
 
-@Component
+//@Component
 public class WikimediaProducer {
 	private Logger logger = LoggerFactory.getLogger(WikimediaProducer.class.getSimpleName());
 	

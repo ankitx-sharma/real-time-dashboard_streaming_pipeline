@@ -18,7 +18,7 @@ import org.springframework.context.event.EventListener;
 import com.kafka.test.demo.consumer.OpenSearchConsumer;
 import com.kafka.test.demo.producer.WikimediaProducer;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class DemoApplication {
 	private Logger logger = LoggerFactory.getLogger(DemoApplication.class.getSimpleName());
 	
@@ -68,6 +68,7 @@ public class DemoApplication {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void runBatchCommands(String fileName) {
 		try (BufferedReader buffer = new BufferedReader(new FileReader(WORKING_DIR+fileName))) {
 			String str;
