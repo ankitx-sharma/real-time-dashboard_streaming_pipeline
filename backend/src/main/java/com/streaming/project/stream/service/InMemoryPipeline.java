@@ -43,7 +43,7 @@ public class InMemoryPipeline {
 						Thread.sleep(ThreadLocalRandom.current().nextInt(2, 100));
 						
 						// simulate occasional error
-						boolean isError = ThreadLocalRandom.current().nextInt(0, 100) < 5;
+						boolean isError = e.shouldFail();
 						
 						long latencyMs =  (System.nanoTime() - start) / 1_000_000;
 						
