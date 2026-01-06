@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchMetrics } from "../api/metricsClient";
 import type { MetricsSnapshot } from "../types/metrics";
+
 import { MetricCard } from "../components/MetricCard";
+import { ThroughputChart } from "../components/Charts/ThroughputChart";
+import { SuccessErrorChart } from "../components/Charts/SuccessErrorChart";
 
 function formatNumber(n: number) {
     return new Intl.NumberFormat().format(n);
@@ -92,12 +95,12 @@ export function Dashboard() {
             <div style={{ marginTop: 18, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 <div style={{ background: "white", borderRadius: 12, padding: 16, border: "1px solid #ddd"}}>
                     <div style={{ fontWeight: 700, marginBottom: 8 }}>Throughput (last 60s)</div>
-                    <div style={{ opacity: 0.7 }}>Chart will go here. History points: {history.length}</div>
+                    <ThroughputChart history={history} />
                 </div>
 
                 <div style={{ background: "white", borderRadius: 12, padding: 16, border: "1px solid #ddd" }}>
                     <div style={{fontWeight: 700, marginBottom: 8}}>Success vs Error</div>
-                    <div style={{ opacity: 0.7 }}>Chart will go here.</div>
+                    <SuccessErrorChart metrics={metrics} />
                 </div>
             </div>
         </div>
