@@ -13,13 +13,13 @@ import com.streaming.project.stream.service.InMemoryPipeline;
 @RestController
 @RequestMapping("/event/trigger")
 public class EventController {
+	
 	private final InMemoryPipeline pipeline;
+	private record PublishRequest(String payload, boolean shouldFail) {}
 	
 	public EventController(InMemoryPipeline pipeline) {
 		this.pipeline = pipeline;
 	}
-	
-	public record PublishRequest(String payload, boolean shouldFail) {}
 	
 	@PostMapping
 	public Map<String, Object> publish (@RequestBody PublishRequest req) {
