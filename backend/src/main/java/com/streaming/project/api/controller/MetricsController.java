@@ -9,7 +9,7 @@ import com.streaming.project.metrics.dto.MetricsSnapshot;
 import com.streaming.project.metrics.service.MetricsCollectorService;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("/fetch")
 public class MetricsController {
 	
 	@Autowired
