@@ -1,7 +1,7 @@
 # Real-Time Streaming Pipeline + Live Dashboard
 
 ## Goal
-Build a real-time event streaming pipeline (Kafka-inspired) and a **live dashboard** that visualizes the system’s behavior in real time: throughput, queue pressure, latency, and errors.
+Build a real-time event streaming pipeline and a **live dashboard** that visualizes the system’s behavior in real time: throughput, queue pressure, latency, and errors.
 
 This project is designed to be:
 - **Demo-friendly** (visual proof the system is working)
