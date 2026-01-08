@@ -24,7 +24,9 @@ public class LoadRunnerApplication {
 		
 		ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 		Runnable tick = (() -> {
-			for(int i=0; i<eventPerSecond; i++) {
+			int randomEventPerSecond = ThreadLocalRandom.current().nextInt(0, eventPerSecond+1);
+			
+			for(int i=0; i<randomEventPerSecond; i++) {
 				boolean shouldFail = ThreadLocalRandom.current().nextInt(0, 100) < errorPercent;
 				
 				String json = """
@@ -44,7 +46,7 @@ public class LoadRunnerApplication {
 		
 		executorService.scheduleAtFixedRate(tick, 0, 1, TimeUnit.SECONDS);
 		
-		System.out.printf("Load runner started -> %s | EPS=%d | ERROR_PERCENT=%d%n",
+		System.out.printf("Load runner started -> %s | EPS in range=0 - %d | ERROR_PERCENT=%d%n",
                 baseUrl, eventPerSecond, errorPercent);
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
