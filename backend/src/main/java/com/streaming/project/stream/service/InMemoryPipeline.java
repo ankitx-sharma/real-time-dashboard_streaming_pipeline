@@ -39,7 +39,7 @@ public class InMemoryPipeline {
 						Event e = queue.take();
 						long start = System.nanoTime();
 						
-						// simulate processing time (real logic later)
+						// random thread sleep time in order to simulate real world processing time
 						Thread.sleep(ThreadLocalRandom.current().nextInt(1, 500));
 						
 						// simulate occasional error
