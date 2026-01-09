@@ -5,6 +5,25 @@ import type { MetricsSnapshot } from "../types/metrics";
 import { MetricCard } from "../components/MetricCard";
 import { ThroughputChart } from "../components/Charts/ThroughputChart";
 import { SuccessErrorChart } from "../components/Charts/SuccessErrorChart";
+import { StatusPill } from "../components/StatusPill";
+
+const MAX_QUEUE = 10000;
+
+function computeStatus(m: MetricsSnapshot | null): "healthy" | "warning" | "critical" {
+    if(!m) return "warning";
+
+    const processed = m.successCount + m.errorCount;
+    const errorrate = processed === 0 ? 0 : (m.errorCount / processed) * 100;
+
+    const queuePct = (m.queueSize / MAX_QUEUE) * 100;
+
+    const critical = queuePct >= 90 || errorrate >= 5 || m.avgLatencyMs >= 150;
+    const warning = queuePct >= 60 || errorrate >= 2 || m.avgLatencyMs >= 80;
+
+    if(critical) return "critical";
+    if(warning) return "warning"
+    return "healthy";
+}
 
 function formatNumber(n: number) {
     return new Intl.NumberFormat().format(n);
@@ -65,6 +84,8 @@ export function Dashboard() {
         return `${((metrics.successCount / total ) * 100 ).toFixed(1)}%`;
     }, [metrics]);
 
+    const metricsStatus = computeStatus(metrics);
+
     return (
         <div style={{ padding: 24, fontFamily: "system-ui, sans-serif", background: "#f6f7fb", minHeight: "100vh" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 }}>
@@ -75,6 +96,7 @@ export function Dashboard() {
                 <div style={{ fontWeight: 700 }}>
                     {status.icon} {status.text}
                 </div>
+                <StatusPill status={metricsStatus}/>
             </div>
 
             {error && (
