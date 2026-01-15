@@ -1,5 +1,7 @@
 # Real-Time Streaming Pipeline + Live Dashboard
 
+<img src="assets/ui_screen.png" alt="Project Title" width="1000" align="center">
+
 ## Goal
 Build a real-time event streaming pipeline and a **live dashboard** that visualizes the system’s behavior in real time: throughput, queue pressure, latency, and errors.
 
