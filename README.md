@@ -1,5 +1,8 @@
 # Real-Time Streaming Pipeline + Live Dashboard
 
+<img width="1902" height="913" alt="image" src="https://github.com/user-attachments/assets/540ace06-db87-47f5-8b66-bbee3a3160c4" />
+
+
 ## Goal
 Build a real-time event streaming pipeline and a **live dashboard** that visualizes the system’s behavior in real time: throughput, queue pressure, latency, and errors.
 
